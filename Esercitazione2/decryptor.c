@@ -88,7 +88,7 @@ int parse_text(char *text, char *cifar_text, int *index_key)
 void *thread_function(void *args)
 {
     thread_data_t *dt = (thread_data_t *)args;
-    printf("[K%d] chiave assegnata : %s", dt->index, dt->key);
+    printf("[K%d] chiave assegnata : %s\n", dt->index, dt->key);
     char buffer[BUFFER_SIZE];
     while (dt->data->exit == 0)
     {
