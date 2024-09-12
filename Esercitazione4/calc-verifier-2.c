@@ -305,6 +305,11 @@ void main(int argc, char **argv)
     free(shared_data);
 
     for(int i=0;i<n_calc_file;i++){
+        free(calc_thread_args[i]);
+    }
+    free(calc_thread_args);
+
+     for(int i=0;i<N_OPERATIONS;i++){
         free(op_thread_args[i]);
     }
     free(op_thread_args);
