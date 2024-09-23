@@ -20,7 +20,7 @@ typedef struct
     int maximum_offer;
     int current_offer;
     int current_bidder_index;
-    pthread_cond_t cond_1; 
+    pthread_cond_t cond_1;
     pthread_cond_t cond_2;
     pthread_mutex_t mutex;
     int exit;
@@ -92,13 +92,16 @@ void *bidders_thread(void *args)
     bidders_thread_args_t *dt = (bidders_thread_args_t *)args;
     shared_data_t *shared_data = dt->shared_data;
 
-    printf("[B%d] offerente pronto\n", dt->index+1);
+    printf("[B%d] offerente pronto\n", dt->index + 1);
 
     while (shared_data->exit == 0)
     {
         pthread_cond_wait(&shared_data->cond_1, &shared_data->mutex);
         if (shared_data->exit != 0)
+        {
+            pthread_mutex_unlock(&shared_data->mutex);
             break;
+        }
         int offer = 1 + rand() % shared_data->maximum_offer;
         printf("[B%d] invio offerta di %d EUR per asta n. %d\n", dt->index + 1, offer, shared_data->auction_index);
         shared_data->current_offer = offer;
@@ -147,7 +150,6 @@ void main(int argc, char **argv)
 
         bidders[i] = bidder;
     }
-
 
     // apro il file delle offerte, leggo riga per riga e faccio partire l'asta per quell'oggetto
     FILE *auction_fp = fopen(auction_filename, "r");
@@ -210,6 +212,7 @@ void main(int argc, char **argv)
     shared_data->exit = 1;
 
     // aspetto che tutti i thread terminano
+    pthread_mutex_unlock(&shared_data->mutex);
     pthread_cond_broadcast(&shared_data->cond_1);
     for (int i = 0; i < num_bidders; i++)
     {
