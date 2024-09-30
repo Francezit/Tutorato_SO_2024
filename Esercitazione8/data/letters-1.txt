@@ -1,0 +1,5 @@
+mario;macchina
+roberta;barca
+giuseppe;moto
+alessia;monopattino
+francesco;barca

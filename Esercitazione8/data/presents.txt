@@ -1,0 +1,4 @@
+moto;1000
+monopattino;500
+macchina;50000
+barca;10000

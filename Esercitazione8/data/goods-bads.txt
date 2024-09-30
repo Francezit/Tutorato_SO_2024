@@ -1,0 +1,10 @@
+angelo;buono
+giulia;cattivo
+luca;cattivo
+erica;buono
+andrea;buono
+mario;cattivo
+roberta;buono
+giuseppe;buono
+alessia;cattivo
+francesco;buono
